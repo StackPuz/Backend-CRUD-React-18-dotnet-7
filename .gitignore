@@ -1,0 +1,4 @@
+/dotnet_api/bin
+/dotnet_api/obj
+/react/node_modules
+/react/package-lock.json
