@@ -82,8 +82,7 @@ namespace App.Controllers
             .Select(e => new ViewModel.Detail.OrderHeaderOrderDetail {
                 No = e.orderDetail.No,
                 ProductName = e.product.Name,
-                Qty = e.orderDetail.Qty,
-                OrderId = e.orderDetail.OrderId
+                Qty = e.orderDetail.Qty
             }).ToListAsync();
             return Ok(new { orderHeader, orderHeaderOrderDetails });
         }
@@ -123,12 +122,32 @@ namespace App.Controllers
                 CustomerId = item.CustomerId,
                 OrderDate = item.OrderDate
             };
+            var orderHeaderOrderDetails = await _context.OrderHeader
+            .Join(
+                _context.OrderDetail,
+                orderHeader => orderHeader.Id,
+                orderDetail => orderDetail.OrderId,
+                (orderHeader, orderDetail) => new { orderHeader, orderDetail }
+            )
+            .Join(
+                _context.Product,
+                combine => combine.orderDetail.ProductId,
+                product => product.Id,
+                (combined, product) => new { combined.orderHeader, combined.orderDetail, product }
+            )
+            .Where(e => e.orderHeader.Id == id)
+            .Select(e => new ViewModel.Edit.OrderHeaderOrderDetail {
+                No = e.orderDetail.No,
+                ProductName = e.product.Name,
+                Qty = e.orderDetail.Qty,
+                OrderId = e.orderDetail.OrderId
+            }).ToListAsync();
             var customers = await _context.Customer
             .Select(e => new ViewModel.Edit.Customer {
                 Id = e.Id,
                 Name = e.Name
             }).ToListAsync();
-            return Ok(new { orderHeader, customers });
+            return Ok(new { orderHeader, orderHeaderOrderDetails, customers });
         }
 
         [HttpPut("{id}")]
@@ -172,7 +191,26 @@ namespace App.Controllers
                 CustomerName = e.customer.Name,
                 OrderDate = e.orderHeader.OrderDate
             }).FirstOrDefaultAsync(e => e.Id == id);
-            return Ok(new { orderHeader });
+            var orderHeaderOrderDetails = await _context.OrderHeader
+            .Join(
+                _context.OrderDetail,
+                orderHeader => orderHeader.Id,
+                orderDetail => orderDetail.OrderId,
+                (orderHeader, orderDetail) => new { orderHeader, orderDetail }
+            )
+            .Join(
+                _context.Product,
+                combine => combine.orderDetail.ProductId,
+                product => product.Id,
+                (combined, product) => new { combined.orderHeader, combined.orderDetail, product }
+            )
+            .Where(e => e.orderHeader.Id == id)
+            .Select(e => new ViewModel.Delete.OrderHeaderOrderDetail {
+                No = e.orderDetail.No,
+                ProductName = e.product.Name,
+                Qty = e.orderDetail.Qty
+            }).ToListAsync();
+            return Ok(new { orderHeader, orderHeaderOrderDetails });
         }
 
         [HttpDelete("{id}")]

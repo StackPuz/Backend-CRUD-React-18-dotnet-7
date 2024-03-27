@@ -6,6 +6,7 @@ import Util from '../../util'
 export default function BrandDelete(props) {
   
   const [ brand, setBrand ] = useState({})
+  const [ brandProducts, setBrandProducts ] = useState([])
   
   useEffect(() => {
     get().finally(() => {
@@ -16,6 +17,7 @@ export default function BrandDelete(props) {
   function get() {
     return Service.delete(props.match.params.id).then(response => {
       setBrand(response.data.brand)
+      setBrandProducts(response.data.brandProducts)
     })
   }
 
@@ -41,6 +43,25 @@ export default function BrandDelete(props) {
               <div className="form-group col-md-6 col-lg-4">
                 <label htmlFor="brand_name">Name</label>
                 <input readOnly id="brand_name" name="Name" className="form-control form-control-sm" value={brand.Name || '' } required maxLength="50" />
+              </div>
+              <div className="col-12">
+                <h6>Brand's products</h6>
+                <table className="table table-sm table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {brandProducts.map((brandProduct, index) =>
+                    <tr key={index}>
+                      <td>{brandProduct.Name}</td>
+                      <td className="text-right">{brandProduct.Price}</td>
+                    </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
               <div className="col-12">
                 <Link className="btn btn-sm btn-secondary" to={Util.getRef('/brand')}>Cancel</Link>

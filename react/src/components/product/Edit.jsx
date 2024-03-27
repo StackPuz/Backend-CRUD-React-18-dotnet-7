@@ -78,7 +78,7 @@ export default function ProductEdit(props) {
               </div>
               <div className="form-group col-md-6 col-lg-4">
                 <label htmlFor="product_image">Image</label>
-                <input type="file" id="product_image" name="ImageFile" className="form-control form-control-sm" maxLength="50" />
+                <input type="file" accept="image/*" id="product_image" name="ImageFile" className="form-control form-control-sm" maxLength="50" />
                 <a href={`http://localhost:5000/uploads/products/${product.Image || '' }`} target="_blank" rel="noreferrer" title={`${product.Image || '' }`}><img className="img-item" src={`http://localhost:5000/uploads/products/${product.Image || '' }`} /></a>
                 {errors.Image && <span className="text-danger">{errors.Image}</span>}
               </div>

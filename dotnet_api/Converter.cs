@@ -5,42 +5,42 @@ using System.Text.Json.Serialization;
 
 namespace App
 {
-    public class DateTimeConverter : JsonConverter<DateTime?>
+    public class DateTimeConverter : JsonConverter<DateTime>
     {
-        public override DateTime? Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
+        public override DateTime Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
         {
             var value = reader.GetString();
             try {
-                return (value.Length == Util.dateFormat.Length ? Util.GetDate(value) : Util.GetDateTime(value));
+                return (value.Length == Util.dateFormat.Length ? Util.GetDate(value) : Util.GetDateTime(value)).Value;
             }
             catch (Exception e) {
                 throw new JsonException(e.Message);
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            var format = (value.Value.TimeOfDay.TotalSeconds == 0 ? Util.dateFormat : Util.dateTimeFormat);
-            writer.WriteStringValue(value.Value.ToString(format));
+            var format = (value.TimeOfDay.TotalSeconds == 0 ? Util.dateFormat : Util.dateTimeFormat);
+            writer.WriteStringValue(value.ToString(format));
         }
     }
 
-    public class TimeSpanConverter : JsonConverter<TimeSpan?>
+    public class TimeSpanConverter : JsonConverter<TimeSpan>
     {
-        public override TimeSpan? Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
+        public override TimeSpan Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)
         {
             var value = reader.GetString();
             try {
-                return Util.GetTime(value);
+                return Util.GetTime(value).Value;
             }
             catch (Exception e) {
                 throw new JsonException(e.Message);
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(DateTime.UnixEpoch.Add(value.Value).ToString(Util.timeFormat));
+            writer.WriteStringValue(DateTime.UnixEpoch.Add(value).ToString(Util.timeFormat));
         }
     }
 

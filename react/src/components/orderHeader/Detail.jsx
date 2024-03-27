@@ -46,7 +46,6 @@ export default function OrderHeaderDetail(props) {
                       <th>No</th>
                       <th>Product</th>
                       <th>Qty</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,16 +54,10 @@ export default function OrderHeaderDetail(props) {
                       <td className="text-center">{orderHeaderOrderDetail.No}</td>
                       <td>{orderHeaderOrderDetail.ProductName}</td>
                       <td className="text-right">{orderHeaderOrderDetail.Qty}</td>
-                      <td className="text-center">
-                        <Link className="btn btn-sm btn-primary" to={`/orderDetail/edit/${orderHeaderOrderDetail.OrderId}/${orderHeaderOrderDetail.No}`} title="Edit"><i className="fa fa-pencil"></i></Link>
-                        <Link className="btn btn-sm btn-danger" to={`/orderDetail/delete/${orderHeaderOrderDetail.OrderId}/${orderHeaderOrderDetail.No}`} title="Delete"><i className="fa fa-times"></i></Link>
-                      </td>
                     </tr>
                     )}
                   </tbody>
                 </table>
-                <Link className="btn btn-sm btn-primary" to={`/orderDetail/create?order_detail_order_id=${orderHeader.Id}`}>Add</Link>
-                <hr />
               </div>
               <div className="col-12">
                 <Link className="btn btn-sm btn-secondary" to={Util.getRef('/orderHeader')}>Back</Link>

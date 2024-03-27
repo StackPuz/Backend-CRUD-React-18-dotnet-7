@@ -32,7 +32,6 @@ namespace App.ViewModels.Brand.Detail
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int Id { get; set; }
     }
 }
 
@@ -46,6 +45,13 @@ namespace App.ViewModels.Brand.Edit
         [MaxLength(50)]
         public string Name { get; set; }
     }
+
+    public class BrandProduct
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int Id { get; set; }
+    }
 }
 
 namespace App.ViewModels.Brand.Delete
@@ -54,5 +60,11 @@ namespace App.ViewModels.Brand.Delete
     {
         public int Id { get; set; }
         public string Name { get; set; }
+    }
+
+    public class BrandProduct
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
     }
 }

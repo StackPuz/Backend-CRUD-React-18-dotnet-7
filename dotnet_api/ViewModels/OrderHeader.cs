@@ -42,7 +42,6 @@ namespace App.ViewModels.OrderHeader.Detail
         public short No { get; set; }
         public string ProductName { get; set; }
         public short Qty { get; set; }
-        public int OrderId { get; set; }
     }
 }
 
@@ -56,6 +55,14 @@ namespace App.ViewModels.OrderHeader.Edit
         public int CustomerId { get; set; }
         [Required]
         public DateTime OrderDate { get; set; }
+    }
+
+    public class OrderHeaderOrderDetail
+    {
+        public short No { get; set; }
+        public string ProductName { get; set; }
+        public short Qty { get; set; }
+        public int OrderId { get; set; }
     }
 
     public class Customer
@@ -72,5 +79,12 @@ namespace App.ViewModels.OrderHeader.Delete
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public DateTime OrderDate { get; set; }
+    }
+
+    public class OrderHeaderOrderDetail
+    {
+        public short No { get; set; }
+        public string ProductName { get; set; }
+        public short Qty { get; set; }
     }
 }

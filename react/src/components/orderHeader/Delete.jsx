@@ -6,6 +6,7 @@ import Util from '../../util'
 export default function OrderHeaderDelete(props) {
   
   const [ orderHeader, setOrderHeader ] = useState({})
+  const [ orderHeaderOrderDetails, setOrderHeaderOrderDetails ] = useState([])
   
   useEffect(() => {
     get().finally(() => {
@@ -16,6 +17,7 @@ export default function OrderHeaderDelete(props) {
   function get() {
     return Service.delete(props.match.params.id).then(response => {
       setOrderHeader(response.data.orderHeader)
+      setOrderHeaderOrderDetails(response.data.orderHeaderOrderDetails)
     })
   }
 
@@ -45,6 +47,26 @@ export default function OrderHeaderDelete(props) {
               <div className="form-group col-md-6 col-lg-4">
                 <label htmlFor="order_header_order_date">Order Date</label>
                 <input readOnly id="order_header_order_date" name="OrderDate" className="form-control form-control-sm" value={orderHeader.OrderDate || '' } data-type="date" autoComplete="off" required />
+              </div>
+              <div className="col-12">
+                <table className="table table-sm table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Product</th>
+                      <th>Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderHeaderOrderDetails.map((orderHeaderOrderDetail, index) =>
+                    <tr key={index}>
+                      <td className="text-center">{orderHeaderOrderDetail.No}</td>
+                      <td>{orderHeaderOrderDetail.ProductName}</td>
+                      <td className="text-right">{orderHeaderOrderDetail.Qty}</td>
+                    </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
               <div className="col-12">
                 <Link className="btn btn-sm btn-secondary" to={Util.getRef('/orderHeader')}>Cancel</Link>

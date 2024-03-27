@@ -6,6 +6,7 @@ import Util from '../../util'
 export default function OrderHeaderEdit(props) {
   
   const [ orderHeader, setOrderHeader ] = useState({})
+  const [ orderHeaderOrderDetails, setOrderHeaderOrderDetails ] = useState([])
   const [ customers, setCustomers ] = useState([])
   const [ errors, setErrors ] = useState({})
   
@@ -18,6 +19,7 @@ export default function OrderHeaderEdit(props) {
   function get() {
     return Service.edit(props.match.params.id).then(response => {
       setOrderHeader(response.data.orderHeader)
+      setOrderHeaderOrderDetails(response.data.orderHeaderOrderDetails)
       setCustomers(response.data.customers)
     })
   }
@@ -67,6 +69,33 @@ export default function OrderHeaderEdit(props) {
                 <label htmlFor="order_header_order_date">Order Date</label>
                 <input id="order_header_order_date" name="OrderDate" className="form-control form-control-sm" onChange={onChange} value={orderHeader.OrderDate || '' } data-type="date" autoComplete="off" required />
                 {errors.OrderDate && <span className="text-danger">{errors.OrderDate}</span>}
+              </div>
+              <div className="col-12">
+                <table className="table table-sm table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Product</th>
+                      <th>Qty</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderHeaderOrderDetails.map((orderHeaderOrderDetail, index) =>
+                    <tr key={index}>
+                      <td className="text-center">{orderHeaderOrderDetail.No}</td>
+                      <td>{orderHeaderOrderDetail.ProductName}</td>
+                      <td className="text-right">{orderHeaderOrderDetail.Qty}</td>
+                      <td className="text-center">
+                        <Link className="btn btn-sm btn-primary" to={`/orderDetail/edit/${orderHeaderOrderDetail.OrderId}/${orderHeaderOrderDetail.No}`} title="Edit"><i className="fa fa-pencil"></i></Link>
+                        <Link className="btn btn-sm btn-danger" to={`/orderDetail/delete/${orderHeaderOrderDetail.OrderId}/${orderHeaderOrderDetail.No}`} title="Delete"><i className="fa fa-times"></i></Link>
+                      </td>
+                    </tr>
+                    )}
+                  </tbody>
+                </table>
+                <Link className="btn btn-sm btn-primary" to={`/orderDetail/create?order_detail_order_id=${orderHeader.Id}`}>Add</Link>
+                <hr />
               </div>
               <div className="col-12">
                 <Link className="btn btn-sm btn-secondary" to={Util.getRef('/orderHeader')}>Cancel</Link>

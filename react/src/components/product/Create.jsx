@@ -72,7 +72,7 @@ export default function ProductCreate(props) {
               </div>
               <div className="form-group col-md-6 col-lg-4">
                 <label htmlFor="product_image">Image</label>
-                <input type="file" id="product_image" name="ImageFile" className="form-control form-control-sm" maxLength="50" />
+                <input type="file" accept="image/*" id="product_image" name="ImageFile" className="form-control form-control-sm" maxLength="50" />
                 {errors.Image && <span className="text-danger">{errors.Image}</span>}
               </div>
               <div className="col-12">

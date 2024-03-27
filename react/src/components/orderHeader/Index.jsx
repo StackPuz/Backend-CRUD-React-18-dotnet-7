@@ -88,6 +88,7 @@ export default function OrderHeaderIndex(props) {
                   <td className="text-center">{orderHeader.OrderDate}</td>
                   <td className="text-center">
                     <Link className="btn btn-sm btn-secondary" to={`/orderHeader/${orderHeader.Id}`} title="View"><i className="fa fa-eye"></i></Link>
+                    <Link className="btn btn-sm btn-primary" to={`/orderHeader/edit/${orderHeader.Id}`} title="Edit"><i className="fa fa-pencil"></i></Link>
                     <Link className="btn btn-sm btn-danger" to={`/orderHeader/delete/${orderHeader.Id}`} title="Delete"><i className="fa fa-times"></i></Link>
                   </td>
                 </tr>

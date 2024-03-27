@@ -41,8 +41,7 @@ export default function BrandDetail(props) {
                   <thead>
                     <tr>
                       <th>Product Name</th>
-                      <th>Product Price</th>
-                      <th>Actions</th>
+                      <th>Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -50,17 +49,10 @@ export default function BrandDetail(props) {
                     <tr key={index}>
                       <td>{brandProduct.Name}</td>
                       <td className="text-right">{brandProduct.Price}</td>
-                      <td className="text-center">
-                        <Link className="btn btn-sm btn-secondary" to={`/product/${brandProduct.Id}`} title="View"><i className="fa fa-eye"></i></Link>
-                        <Link className="btn btn-sm btn-primary" to={`/product/edit/${brandProduct.Id}`} title="Edit"><i className="fa fa-pencil"></i></Link>
-                        <Link className="btn btn-sm btn-danger" to={`/product/delete/${brandProduct.Id}`} title="Delete"><i className="fa fa-times"></i></Link>
-                      </td>
                     </tr>
                     )}
                   </tbody>
                 </table>
-                <Link className="btn btn-sm btn-primary" to={`/product/create?product_brand_id=${brand.Id}`}>Add</Link>
-                <hr />
               </div>
               <div className="col-12">
                 <Link className="btn btn-sm btn-secondary" to={Util.getRef('/brand')}>Back</Link>

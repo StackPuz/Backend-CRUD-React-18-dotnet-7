@@ -62,8 +62,7 @@ namespace App.Controllers
             .Where(e => e.brand.Id == id)
             .Select(e => new ViewModel.Detail.BrandProduct {
                 Name = e.product.Name,
-                Price = e.product.Price,
-                Id = e.product.Id
+                Price = e.product.Price
             }).ToListAsync();
             return Ok(new { brand, brandProducts });
         }
@@ -96,7 +95,20 @@ namespace App.Controllers
                 Id = item.Id,
                 Name = item.Name
             };
-            return Ok(new { brand });
+            var brandProducts = await _context.Brand
+            .Join(
+                _context.Product,
+                brand => brand.Id,
+                product => product.BrandId,
+                (brand, product) => new { brand, product }
+            )
+            .Where(e => e.brand.Id == id)
+            .Select(e => new ViewModel.Edit.BrandProduct {
+                Name = e.product.Name,
+                Price = e.product.Price,
+                Id = e.product.Id
+            }).ToListAsync();
+            return Ok(new { brand, brandProducts });
         }
 
         [HttpPut("{id}")]
@@ -134,7 +146,19 @@ namespace App.Controllers
                 Id = e.Id,
                 Name = e.Name
             }).FirstOrDefaultAsync(e => e.Id == id);
-            return Ok(new { brand });
+            var brandProducts = await _context.Brand
+            .Join(
+                _context.Product,
+                brand => brand.Id,
+                product => product.BrandId,
+                (brand, product) => new { brand, product }
+            )
+            .Where(e => e.brand.Id == id)
+            .Select(e => new ViewModel.Delete.BrandProduct {
+                Name = e.product.Name,
+                Price = e.product.Price
+            }).ToListAsync();
+            return Ok(new { brand, brandProducts });
         }
 
         [HttpDelete("{id}")]
