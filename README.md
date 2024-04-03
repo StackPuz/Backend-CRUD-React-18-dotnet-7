@@ -35,7 +35,7 @@ Checkout the live demo at https://demo-spa.stackpuz.com
 ## Run project
 
 1. Run React project. `npm run dev`
-2. Run .NET project. `dotnet run --urls="http://localhost:5000`
+2. Run .NET project. `dotnet run --urls="http://localhost:5000"`
 3. Navigate to `http://localhost:5173`
 4. Login with user `admin` password `1234`
 
